@@ -1,4 +1,0 @@
-#Wed Aug 31 13:53:34 BRT 2022
-base.0=C\:\\Users\\novak\\Downloads\\migration\\cupertino_timer\\example\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
