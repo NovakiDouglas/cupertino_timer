@@ -16,8 +16,8 @@ class TimerApp extends StatelessWidget {
 }
 
 class TimerHomePage extends StatefulWidget {
-  TimerHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  TimerHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _TimerHomePageState createState() => _TimerHomePageState();
@@ -28,7 +28,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(

@@ -7,10 +7,10 @@ import 'src/timer_painter.dart';
 
 class CupertinoTimer extends StatefulWidget {
   CupertinoTimer({
-    Key key,
+    Key? key,
 
     // The duration of time the widget should countdown from.
-    @required this.duration,
+    required this.duration,
 
     // Function listener for current value.
     this.valueListener,
@@ -30,11 +30,11 @@ class CupertinoTimer extends StatefulWidget {
 
   final Duration duration;
 
-  final void Function(Duration timeElapsed) valueListener;
+  final void Function(Duration timeElapsed)? valueListener;
 
   final bool startOnInit;
 
-  final TextStyle timeStyle;
+  final TextStyle? timeStyle;
 
   final Color ringColor;
 
@@ -48,7 +48,7 @@ class CupertinoTimer extends StatefulWidget {
 
 class _CupertinoTimerState extends State<CupertinoTimer>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
+  AnimationController? controller;
 
   bool running = false;
 
@@ -56,11 +56,11 @@ class _CupertinoTimerState extends State<CupertinoTimer>
   void initState() {
     controller = AnimationController(vsync: this);
 
-    controller.duration = widget.duration;
-    controller.addListener(_animationValueListener);
-    controller.addStatusListener(_animationStatusListener);
+    controller!.duration = widget.duration;
+    controller!.addListener(_animationValueListener);
+    controller!.addStatusListener(_animationStatusListener);
     if (widget.startOnInit) {
-      controller.forward();
+      controller!.forward();
       running = true;
     }
     super.initState();
@@ -71,16 +71,16 @@ class _CupertinoTimerState extends State<CupertinoTimer>
     return GestureDetector(
       onTap: () {
         if (!running) {
-          controller.forward();
+          controller!.forward();
           running = true;
         } else if (running) {
-          controller.stop();
+          controller!.stop();
           running = false;
         }
       },
       onDoubleTap: () {
-        controller.stop();
-        controller.reset();
+        controller!.stop();
+        controller!.reset();
         running = false;
       },
       child: Container(
@@ -91,7 +91,7 @@ class _CupertinoTimerState extends State<CupertinoTimer>
             child: Stack(
               children: <Widget>[
                 AnimatedBuilder(
-                  animation: controller,
+                  animation: controller!,
                   builder: (context, _) {
                     return CustomPaint(
                       size: MediaQuery.of(context).size,
@@ -108,7 +108,7 @@ class _CupertinoTimerState extends State<CupertinoTimer>
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: AnimatedBuilder(
-                        animation: controller,
+                        animation: controller!,
                         builder: (context, child) {
                           return Text(getText(),
                               style: TextStyle(
@@ -135,7 +135,7 @@ class _CupertinoTimerState extends State<CupertinoTimer>
 
   void _animationValueListener() {
     if (widget.valueListener != null) {
-      widget.valueListener(controller.duration * controller.value);
+      widget.valueListener!(controller!.duration! * controller!.value);
     }
   }
 
@@ -148,10 +148,10 @@ class _CupertinoTimerState extends State<CupertinoTimer>
   }
 
   String getText() {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller!.duration! * controller!.value;
 
     duration =
-        Duration(seconds: controller.duration.inSeconds - duration.inSeconds);
+        Duration(seconds: controller!.duration!.inSeconds - duration.inSeconds);
 
     if (duration.inHours > 0) {
       return "${duration.inHours}:${(duration.inMinutes % 60).toString().padLeft(2, "0")}:${(duration.inSeconds % 60).toString().padLeft(2, "0")}";
@@ -162,9 +162,9 @@ class _CupertinoTimerState extends State<CupertinoTimer>
 
   @override
   void dispose() {
-    controller.stop();
-    controller.removeStatusListener(_animationStatusListener);
-    controller.dispose();
+    controller!.stop();
+    controller!.removeStatusListener(_animationStatusListener);
+    controller!.dispose();
     super.dispose();
   }
 }
